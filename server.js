@@ -60,11 +60,27 @@ io.on('connection', function(socket){
 		if(data.to !== "everyone"){
 			let to = users.filter(user => user.socketID === data.to);
 
-			io.to(data.to).emit('onChatNotifyUser', {to : "You", from: from[0].username, msg: data.msg, type:"msg"});
-			socket.emit('onChatNotifySelf', {to : to[0].username, from: "You", msg: data.msg, type:"msg"});
+			io.to(data.to).emit('onChatNotifyUser',{
+        to : "You",
+        from: from[0].username,
+        msg: data.msg,
+        type:"msg"
+      });
+
+			socket.emit('onChatNotifySelf', { 
+        to : to[0].username,
+        from: "You",
+        msg: data.msg,
+        type:"msg"
+      });
 		}
 		else{
-				io.emit('onChatNotifyAll', {to : "Everyone", from: from[0].username, msg: data.msg, type:"msg"})
+			io.emit('onChatNotifyAll', {
+        to : "Everyone",
+        from: from[0].username,
+        msg: data.msg,
+        type:"msg"
+      });
 		}
 			
 	})
