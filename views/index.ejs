@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Chatroom</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href = "stylesheets/styles.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/scripts.js"></script>
+	</head>
+	<body>
+		<div id = "container">
+				
+			<div id = "chats">
+					
+			</div>
+
+			<div id = "participants">
+				<p>Participants</p>
+				<ul class="list-group list-group-flush">
+						<li class="list-group-item participant self">
+							<p class = "participant self">You</p>
+						</li>
+				<% for(user in users) { %>
+						
+					<% if (users[user].admin == true) { %>
+						<li>
+							<button id=<%= users[user].socketID %> class = "list-group-item list-group-item-action admin">
+								<span class="badge bg-primary">Admin</span>
+								<%=users[user].username%>
+							</button>
+						</li>
+					<% } else { %>
+							<li>
+								<button id=<%= users[user].socketID %> class = "list-group-item list-group-item-action participant">
+									<%=users[user].username%>
+								</button>
+							</li>
+					<% } %>
+
+				<% } %>
+				</ul>
+			</div>
+
+			<form>
+				<input type = "text" placeholder="Say something">
+				<select name="users" id="select-users">
+						<option value="everyone">Everyone</option>
+				<% for(user in users) { %>
+						<option value=<%= users[user].socketID %>><%=users[user].username%></option>
+				<% } %>
+				</select>
+				<input type = "submit" value = "Send">
+			</form>
+
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+		</div>
+			
+	</body>
+</html>
